@@ -265,18 +265,6 @@ EOF
         recursors_config=$(echo "${recursors_config}"| sed 's/, $//')" ],"
   fi
 
-  local bootstrap_expect=""
-  if [[ "$server" == "true" ]]; then
-    local instance_tags=""
-    local cluster_size=""
-
-    instance_tags=$(get_instance_tags "$instance_id" "$instance_region")
-    cluster_size=$(get_cluster_size "$instance_tags" "$instance_region")
-
-    bootstrap_expect="\"bootstrap_expect\": $cluster_size,"
-    ui="true"
-  fi
-
   local autopilot_configuration=$(cat <<EOF
 "autopilot": {
   "cleanup_dead_servers": $cleanup_dead_servers,
@@ -314,7 +302,6 @@ EOF
 {
   "advertise_addr": "$instance_ip_address",
   "bind_addr": "$instance_ip_address",
-  $bootstrap_expect
   "client_addr": "0.0.0.0",
   "datacenter": "$datacenter",
   "node_name": "$instance_id",
