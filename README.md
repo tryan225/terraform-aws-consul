@@ -1,3 +1,28 @@
+This is a fork of [https://github.com/hashicorp/terraform-aws-consul](https://github.com/hashicorp/terraform-aws-consul) intended to be used expirementally to produce broken or faulty Consul clusters in AWS.
+
+# To use this Module
+
+Switch to a given branch that contains Terraform and other assets that are leveraged to automatically produce different - typically - unwanted Consul scenarios. Then,
+
+```
+$ cd examples/consul_ami/
+$ packer build consul.json
+```
+
+You will leverage that ami-id in the `variables.tf` file contained in this repository:
+
+```
+...
+variable "ami_id" {
+  description = "The ID of the AMI to run in the cluster. This should be an AMI built from the Packer template under examples/consul-ami/consul.json. To keep this example simple, we run the same AMI on both server and client nodes, but in real-world usage, your client nodes would also run your apps. If the default value is used, Terraform will look up the latest AMI build automatically."
+  type        = string
+  default     = "<your ami id here>"
+}
+...
+```
+
+Once all of your other variables are set to your liking in `variables.tf`, you can plan, apply, or destroy your Consul cluster in AWS using Terraform.
+
 [![Maintained by Gruntwork.io](https://img.shields.io/badge/maintained%20by-gruntwork.io-%235849a6.svg)](https://gruntwork.io/?ref=repo_aws_consul)
 # Consul AWS Module
 
